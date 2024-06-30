@@ -1,48 +1,30 @@
-// sketch_mar23a 
-
-// Define the voltage sensor pin
-
 const int voltageSensorPin = A0;
-
-// Define the relay control pin
-
-const int relayControlPin 2;
+const int relayControlPin = 2;
 
 void setup() {
+ 
+  pinMode(relayControlPin, OUTPUT);
 
-// Set the relay control pin as an output pinMode (relayControlPin, OUTPUT);
-
-// Initialize the serial communication Serial.begin(9600);
-
-1
+  Serial.begin(9600);
+}
 
 void loop() {
+ 
+  int voltageValue = analogRead(voltageSensorPin);
 
-// Read the voltage sensor value
 
-int voltageValue analogRead (voltageSensorPin);
+  float voltage = voltageValue * (5.0 / 1023.0);
 
-// Convert the sensor value to voltage (assuming a 5V reference voltage) float voltage voltageValue (5.0/1023.0);
+  Serial.print("Voltage: ");
+  Serial.print(voltage);
+  Serial.println(" V");
 
-// Print the voltage value in the serial monitor Serial.print("Voltage: ");
 
-Serial.print(voltage);
+  if (voltage > 1.0) {
+    digitalWrite(relayControlPin, HIGH);
+  } else {
+    digitalWrite(relayControlPin, LOW);
+  }
 
-Serial.println(" V");
-
-// Check if the voltage is above the threshold if (voltage > 0.5) (
-
-// Energize the relay module digitalWrite(relayControlPin, HIGH);
-
-} else {
-
-// De-energize the relay module
-
-digitalWrite(relayControlPin, LOW);
-
+  delay(500);
 }
-
-// Delay for stability and to avoid excessive serial output delay(500);
-
-}
-
